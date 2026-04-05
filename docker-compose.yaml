@@ -1,0 +1,40 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: sql_hw_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./:/workspace
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  runner:
+    build:
+      context: .
+      dockerfile: runner/Dockerfile
+    container_name: sql_hw_runner
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./:/workspace
+    working_dir: /workspace
+    environment:
+      PGHOST: postgres
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGPORT: 5432
+    command: ["/bin/bash", "/workspace/runner/run_all.sh"]
+
+volumes:
+  postgres_data:
