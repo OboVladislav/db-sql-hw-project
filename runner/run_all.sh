@@ -18,15 +18,15 @@ run_db() {
   psql -h postgres -U postgres -d postgres -c "CREATE DATABASE $DB_NAME;"
 
   echo "Running create.sql for $DB_NAME"
-  psql -h postgres -U postgres -d $DB_NAME -f "/workspace/$DIR/create.sql"
+  psql -h postgres -U postgres -d "$DB_NAME" -f "/workspace/$DIR/create.sql"
 
   echo "Running insert.sql for $DB_NAME"
-  psql -h postgres -U postgres -d $DB_NAME -f "/workspace/$DIR/insert.sql"
+  psql -h postgres -U postgres -d "$DB_NAME" -f "/workspace/$DIR/insert.sql"
 
   for file in /workspace/$DIR/task*.sql; do
     if [ -f "$file" ]; then
       echo "Running $(basename "$file") for $DB_NAME"
-      psql -h postgres -U postgres -d $DB_NAME -f "$file"
+      psql -h postgres -U postgres -d "$DB_NAME" -f "$file"
     fi
   done
 
