@@ -68,6 +68,8 @@ db/
 
 ###  2. Запуск проекта
 
+Запустите службу postgres на порте 5432
+
 В корне проекта выполните:
 ```bash
 docker compose down -v
@@ -107,6 +109,7 @@ docker exec -it sql_hw_postgres psql -U postgres
 ```
 Создать БД:
 ```bash
+psql -h postgres -U postgres -d postgres -c "CREATE DATABASE $DB_NAME;"
 ```
 Подключиться к контейнеру: 
 ```bash
