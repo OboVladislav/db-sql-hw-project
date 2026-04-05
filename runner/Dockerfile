@@ -8,4 +8,4 @@ COPY transport_vehicle_db ./transport_vehicle_db
 COPY vehicle_races_db ./vehicle_races_db
 COPY runner ./runner
 
-RUN sed -i 's/\r$//' /workspace/runner/run_all.sh && chmod +x /workspace/runner/run_all.sh
+RUN sed -i 's/\r$//' /workspace/runner/run_all.sh && chmod +x /workspace/runner/run_all.sh && cat -A /workspace/runner/run_all.sh
